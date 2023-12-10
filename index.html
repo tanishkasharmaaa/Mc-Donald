@@ -1,0 +1,132 @@
+<!DOC<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC DONALDS</title>
+    
+    <style>
+        body {
+            background-color: rgb(255, 247, 0);
+        }
+
+        h1 {
+            font-family: Speedee, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            color: red;
+            font-size: 80px;
+            margin-left: 400px;
+        }
+
+        #foodImage {
+            max-width: 100px; /* Set the maximum width to 100% */
+           margin-left:400px ;
+        }
+        label{
+            font-size: 30px;
+             font-family: Speedee, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+             font-weight: 600;
+             margin-top: 100px;
+        }
+#burger{
+    margin-left: 300px;
+   }
+#fooditem{
+    margin-left: 500px;
+   font-weight: 700;
+   color: rgb(239, 47, 47);
+   font-size:50px ;
+   margin-top: 30px;
+   
+}
+button{
+    padding: 20px;
+    background-color: rgb(122, 213, 122);
+    border-radius: 10px;
+    font-size: 30px;
+    margin-left: 530px;
+}
+   
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>MC DONALDS</h1>
+        <label for="foodItems" id="fooditem">Food Items</label>
+        <br><br>
+        <input type="checkbox" id="Burger" name="food" value="Burger">
+        <label for="Burger">Burger</label>
+
+        <input type="checkbox" id="pizza" name="food" value="Pizza">
+        <label for="pizza">Pizza</label> 
+
+        <input type="checkbox" id="fries" name="food" value="Fries">
+        <label for="fries">Fries</label> 
+
+        <input type="checkbox" id="coke" name="food" value="Coke">
+        <label for="coke">Coke</label> 
+
+        <input type="checkbox" id="curly" name="food" value="Curly">
+        <label for="curly">Curly Fries</label>
+
+        <input type="checkbox" id="rings" name="food" value="OnionRings">
+        <label for="rings">Onion Rings</label>
+
+        <br><br>
+
+        <button onclick="orderFood()">Order Food</button>
+        <br><br>
+
+        <div id="foodImage"></div>
+    </div>
+
+    <script>
+        function orderFood() {
+            const selectedFoodItems = document.querySelectorAll('input[name="food"]:checked');
+            if (selectedFoodItems.length === 0) {
+                alert('Please select at least one food item.');
+                return;
+            }
+
+            let orderId = generateOrderId();
+            let foodImageDiv = document.getElementById("foodImage");
+
+            let promise = new Promise(function(resolve) {
+                let randomTime = Math.floor(Math.random() * 5000 + 1000);
+                setTimeout(function() {
+                    resolve();
+                }, randomTime);
+            });
+
+            promise.then(function() {
+                let selectedFood = Array.from(selectedFoodItems).map(items => items.value).join(", ");
+                let imageURL = getImageURL(selectedFood);
+
+                foodImageDiv.innerHTML = `
+                    <img src="${imageURL}" alt="${selectedFood}">
+                    <p>Order ID: ${orderId}</p>
+                `;
+                foodImageDiv.style.display = 'block';
+            });
+        }
+
+        function generateOrderId() {
+            return "ORD" + Math.floor(Math.random() * 100000);
+        }
+
+        function getImageURL(food) {
+            const foodImageMap = {
+                'Burger':"burger.jpg",
+                'Pizza': 'pizza.jpg',
+                'Fries': 'fries.jpg',
+                'Coke': 'coke.jpg',
+                'Curly': 'curly.jpg',
+                'OnionRings': 'onion.jpg'
+            };
+            return foodImageMap[food] || 'https://example.com/placeholder.jpg';
+        }
+    </script>
+</body>
+</html>
