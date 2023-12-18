@@ -1,146 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Restaurants</title>
-    
-    <style>
-        body {
-            background-color: rgb(255, 247, 0);
-        }
-
-        h1 {
-            font-family: Speedee, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            color: red;
-            font-size: 50px;
-            margin-left: 400px;
-        }
-
-        #foodImage {
-            max-width: 100px;
-            margin-left: 400px;
-            margin-top: 20px;
-        }
-
-        label {
-            font-size: 30px;
-            font-family: Speedee, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            font-weight: 600;
-            margin-top: 100px;
-          
-        }
-
-        #Burger {
-          margin-left: 280px;
-        }
-
-        #fooditem {
-            margin-left: 500px;
-            font-weight: 700;
-            color: rgb(239, 47, 47);
-            font-size: 50px;
-            margin-top: 30px;
-        }
-
-        button {
-            padding: 20px;
-            background-color: rgb(122, 213, 122);
-            border-radius: 10px;
-            font-size: 30px;
-            margin-left: 530px;
-        }
-
-        #orderID {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+    <title>doc</title>
 </head>
+<style>
+    body{
 
+        background-color: rgb(255, 145, 0);
+    }
+    #heading>h1{
+        font-family:"Google Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 800;
+        margin-left: 310px;
+        font-size: 40px;
+        color: rgb(255, 242, 0);
+        
+    }
+     #heading{
+        display: flex;
+        font-family:"Google Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+       
+    }
+    
+    
+    #heading+h2{
+        font-family:"Google Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 30px;
+        margin-left: 500px;
+        font-weight: 800;
+       margin-top: -35px;
+    }
+
+   span{
+    margin-left: 100px;
+    font-family:"Google Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    margin-left: 10px;
+    font-size: 30px;
+   }
+   input{
+    height: 50px;
+    width: 20px;
+
+   }
+   img{margin-top: 10px;
+    border: 10px solid green;
+    width: 500px;
+    height: 300px;
+    margin-left: 350px;
+   }
+   #orderid{
+   margin-left: 270px;
+   }
+   #inputs{
+    margin-top: -10px;
+    margin-left: 100px;
+   }
+   button{
+    margin-left: 520px;
+    width: 200px;
+    font-size: 30px;
+    background-color: rgb(255, 196, 87);
+    border-radius: 5px;
+    margin-top: -30px;
+   }
+</style>
 <body>
-    <div>
-        <h1>Virtual Restaurants</h1>
-        <label for="foodItems" id="fooditem">Food Items</label>
-        <br><br>
-        <input type="checkbox" id="Burger" name="food" value="Burger">
-        <label for="Burger">Burger</label>
-
-        <input type="checkbox" id="pizza" name="food" value="Pizza">
-        <label for="pizza">Pizza</label> 
-
-        <input type="checkbox" id="fries" name="food" value="Fries">
-        <label for="fries">Fries</label> 
-
-        <input type="checkbox" id="coke" name="food" value="Coke">
-        <label for="coke">Coke</label> 
-
-        <input type="checkbox" id="curly" name="food" value="Curly">
-        <label for="curly">Curly Fries</label>
-
-        <input type="checkbox" id="rings" name="food" value="OnionRings">
-        <label for="rings">Onion Rings</label>
-
-        <br><br>
-
-        <button onclick="orderFood()">Order Food</button>
-        <br><br>
-
-        <div id="foodImage"></div>
-        <div id="orderID"></div>
+    <div id="heading">
+        <h1>VIRTUAL RESTAURANTS</h1>
+        <h2 id="orderid"></h2>
+    </div id="container">
+    <h2>Food Items</h2>
+    <div id="inputs">
+        <input type="checkbox" id="burger" class="larger"><span>Burger</span>
+        <input type="checkbox" id="pizza" class="larger"><span>Pizza</span>
+        <input type="checkbox" id="coke" class="larger"><span>Coke</span>
+        <input type="checkbox" id="curly" class="larger"><span>Curly fries</span>
+        <input type="checkbox" id="onion" class="larger"><span>Onion Rings</span>
+        <input type="checkbox" id="icecream" class="larger"><span>Ice-Cream</span>
+        <input type="checkbox" id="fries" class="larger"><span>fries</span>
     </div>
-
-    <script>
-        function orderFood() {
-            const selectedFoodItems = document.querySelectorAll('input[name="food"]:checked');
-            if (selectedFoodItems.length === 0) {
-                alert('Please select at least one food item.');
-                return;
-            }
-
-            let orderId = generateOrderId();
-            let foodImageDiv = document.getElementById("foodImage");
-            let orderIDDiv = document.getElementById("orderID");
-
-            let promise = new Promise(function(resolve) {
-                let randomTime = Math.floor(Math.random() * 5000 + 1000);
-                setTimeout(function() {
-                    resolve();
-                }, randomTime);
-            });
-
-            promise.then(function() {
-                let selectedFood = Array.from(selectedFoodItems).map(items => items.value).join(", ");
-                let imageURL = getImageURL(selectedFood);
-
-                foodImageDiv.innerHTML = `
-                    <img src="${imageURL}" alt="${selectedFood}">
-                `;
-                foodImageDiv.style.display = 'block';
-
-                orderIDDiv.innerText = `Order ID: ${orderId}`;
-            });
-        }
-
-        function generateOrderId() {
-            return "ORD" + Math.floor(Math.random() * 100000);
-        }
-
-        function getImageURL(food) {
-            const foodImageMap = {
-                'Burger': "burger.jpg",
-                'Pizza': 'pizza.jpg',
-                'Fries': 'fries.jpg',
-                'Coke': 'coke.jpg',
-                'Curly': 'curly.jpg',
-                'OnionRings': 'onion.jpg'
-            };
-            return foodImageMap[food] || 'https://example.com/placeholder.jpg';
-        }
-    </script>
+    <div>
+        <img id="food" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOT86AsC1K039etivTEQb7lV33cTJBlQT_kNrMVcXIi3hPO3mPNV3dl4QkmooTKIpA7_4&usqp=CAU"
+            alt="">
+    </div>
+    <br><br>
+    <button onclick="placeOrder()">Order Food</button>
 </body>
+<script>
+
+
+    function placeOrder() {
+        let burger = document.getElementById("burger");
+        let pizza = document.getElementById("pizza");
+        let coke = document.getElementById("coke");
+        let fries = document.getElementById("fries");
+        let onion = document.getElementById("onion");
+        let icecream = document.getElementById("icecream");
+        let curly = document.getElementById("curly");
+
+        const selectedItems = [];
+        if (burger.checked) selectedItems.push("burger");
+        if (pizza.checked) selectedItems.push("pizza");
+        if (coke.checked) selectedItems.push("coke");
+        if (fries.checked) selectedItems.push("fries");
+        if (onion.checked) selectedItems.push("onion");
+        if (icecream.checked) selectedItems.push("icecream");
+        if (curly.checked) selectedItems.push("curly");
+
+        if (selectedItems.lenght == 0) {
+            alert("Please atleast pick one item for the order")
+            return
+        }
+    
+
+
+    const OrderPromise = new Promise(function (resolve) {
+        setTimeout(() => {
+            resolve()
+        }, 1000);
+    })
+    OrderPromise.then(function () {
+        displayOrder(selectedItems)
+    })
+    }
+    function displayOrder(selectedItems) {
+        let foodImageURL = document.getElementById("food");
+        let orderId = document.getElementById("orderid")
+
+        let foodURL = getFoodURL(selectedItems[0]);
+        foodImageURL.src = foodURL;
+
+        let OrderNumber = getOrderId();
+        orderId.textContent = OrderNumber;
+    }
+
+    function getFoodURL(food) {
+        let images = {
+            "burger": "burger.jpg",
+            "pizza": "pizza.jpg",
+            "coke": "coke.jpg",
+            "curly": "curly.jpg",
+            "onion": "onion.jpg",
+            "icecream": "ice-cream.jpg",
+            "fries": "fries.jpg"
+        }
+        return images[food]       }
+
+        function getOrderId(){
+            return Date.now(18).toString(26).substring(2,10).toUpperCase()
+        }
+
+</script>
+
 </html>
